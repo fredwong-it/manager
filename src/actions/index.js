@@ -53,5 +53,5 @@ const loginUserSuccess = (dispatch, user) => {
   });
 
   // navigation to employee screen
-  Actions.employeeList();
+  Actions.main();
 };
