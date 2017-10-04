@@ -28,7 +28,7 @@ export default (state = INITIAL_STATE, action) => {
       // reset to initial state then update the user property
       return { ...state, ...INITIAL_STATE, user: action.payload };
     case LOGIN_USER_FAILED:
-      return { ...state, password: '', loading: false, error: 'Authentication Failed.' };
+      return { ...state, password: '', loading: false, error: 'Authentication Failed' };
     default:
       return state;
   }

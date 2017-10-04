@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
@@ -16,6 +16,20 @@ class LoginForm extends Component {
   onLoginUser() {
     const { email, password } = this.props;
     this.props.loginUser({ email, password });
+  }
+
+  renderError = () => {
+    if (this.props.error) {
+      const { container, errorTextStyle } = styles;
+
+      return (
+        <CardSection>
+          <View style={container}>
+            <Text style={errorTextStyle}>{this.props.error}</Text>
+          </View>
+        </CardSection>
+      );
+    }
   }
 
   renderButton() {
@@ -50,9 +64,7 @@ class LoginForm extends Component {
             value={this.props.password}
           />
         </CardSection>
-        <Text style={styles.errorTextStyle}>
-          {this.props.error}
-        </Text>
+        {this.renderError()}
         <CardSection>
           {this.renderButton()}
         </CardSection>
@@ -64,8 +76,11 @@ class LoginForm extends Component {
 const styles = {
   errorTextStyle: {
     fontSize: 20,
-    alignSelf: 'center',
-    color: 'red'
+    color: 'red',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center'
   }
 };
 
