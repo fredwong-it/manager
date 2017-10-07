@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 import {
   EMPLOYEE_UPDATE,
   EMPLOYEE_CREATE
@@ -15,12 +16,13 @@ export const employeeUpdate = ({ prop, value }) => {
 export const employeeCreate = ({ name, phone, shift }) => {
   //console.log(name, phone, shift);
   const { currentUser } = firebase.auth();
-  
-  firebase.database().ref(`users/${currentUser.uid}/employees`)
-    .push({ name, phone, shift });
 
-  return {
-    type: EMPLOYEE_CREATE,
-    payload: ''
+  // pretend to use redux thunk but not dispatch
+  return (dispatch) => {
+    dispatch({ type: EMPLOYEE_CREATE });
+
+    firebase.database().ref(`users/${currentUser.uid}/employees`)
+      .push({ name, phone, shift })
+      .then(() => Actions.pop());
   };
 };
