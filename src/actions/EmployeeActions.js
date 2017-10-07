@@ -32,8 +32,10 @@ export const employeesFetch = () => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
+    // this event watcher will exist in the whole application life cycle, define once only
     firebase.database().ref(`/users/${currentUser.uid}/employees`)
       .on('value', snapshot => {
+        // will dispatch new action whenever the value is changed
         dispatch({
           type: EMPLOYEES_FETCH_SUCCESS,
           payload: snapshot.val()
