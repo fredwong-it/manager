@@ -2,11 +2,13 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
-import { Card, CardSection, Button } from './common';
+import { Card, CardSection, Button, Confirm } from './common';
 import EmployeeForm from './EmployeeForm';
 import { employeeUpdate, employeeSave } from '../actions';
 
 class EmployeeEdit extends Component {
+  state = { showModal: false }
+
   componentWillMount() {
     console.log(this.props.employee);
     // const { name, phone, shift } = this.props.employee;
@@ -45,6 +47,14 @@ class EmployeeEdit extends Component {
             Text Schedule
           </Button>
         </CardSection>
+        <CardSection>
+          <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
+            Fire Employee
+          </Button>
+        </CardSection>
+        <Confirm visible={this.state.showModal}>
+          Are you sure you want to delete this?
+        </Confirm>
       </Card>
     );
   }
